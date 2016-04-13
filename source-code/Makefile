@@ -4,7 +4,7 @@
 #									      #
 #	+ Created Date: April 8th, 2016	      #
 #									      #
-#	+ Last Modified: April 12th, 2016	  #
+#	+ Last Modified: April 13th, 2016	  #
 #									  	  #
 #	+ Title: Makefile   				  #
 #									      #
@@ -22,25 +22,29 @@ CC = g++
 
 ANSWER = ../answ
 
+#flags
+
+FLAGS = -O2 -std=c++11 -Werror
+
 # >>>>>>>> Rules default to create program <<<<<< #
 
 all: main
 
 main: main.o runnable.o ioaction.o ctrlthread.o
-	$(CC) -g3 -std=c++11 -pthread main.o runnable.o ioaction.o ctrlthread.o -o main
+	$(CC) -g3 $(FLAGS) -pthread main.o runnable.o ioaction.o ctrlthread.o -o main
 	./main
 
 main.o: main.cpp
-	$(CC) -c -std=c++11 main.cpp
+	$(CC) -c $(FLAGS) main.cpp
 
 ioaction.o: ioaction.cpp
-	$(CC) -c -std=c++11 ioaction.cpp
+	$(CC) -c $(FLAGS) ioaction.cpp
 
 runnable.o: runnable.cpp
-	$(CC) -c -std=c++11 runnable.cpp
+	$(CC) -c $(FLAGS) runnable.cpp
 
 ctrlthread.o: ctrlthread.cpp
-	$(CC) -c -std=c++11 ctrlthread.cpp
+	$(CC) -c $(FLAGS) ctrlthread.cpp
 
 .PHONY: clean
 	

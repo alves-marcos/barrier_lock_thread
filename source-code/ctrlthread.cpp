@@ -6,7 +6,7 @@
 #									      #
 #	+ Created Date: March 30th, 2016      #
 #									      #
-#	+ Last Modified: April 12th, 2016	  #
+#	+ Last Modified: April 13th, 2016	  #
 #									  	  #
 #	+ Title: ctrlthread.cpp			      #
 #									      #
@@ -21,10 +21,7 @@
 namespace ctrl {
 
 	ctrl::barriers::barriers(int number) : number_threads(number) {
-		
 		this->counter = 0;
-		
-		this->reset = 0;
 	}
 
 	ctrl::barriers::barriers() { /* no implementation */ }
@@ -34,15 +31,6 @@ namespace ctrl {
 		__sync_fetch_and_add(&this->counter, 1);
 
 		while(this->counter < this->number_threads);
-		
-		__sync_fetch_and_add(&this->reset, 1);
-
-		if(number_threads == this->reset) { 
-			
-			this->reset = 0;
-			
-			this->counter = 0;
-		}
 	}
 
 	ctrl::locks::locks(int number): number_threads(number) { 

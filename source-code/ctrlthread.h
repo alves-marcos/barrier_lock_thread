@@ -6,7 +6,7 @@
 #									      #
 #	+ Created Date: March 30th, 2016      #
 #									      #
-#	+ Last Modified: April 12th, 2016	  #
+#	+ Last Modified: April 13th, 2016	  #
 #									  	  #
 #	+ Title: ctrlthread.h 			  	  #
 #									      #
@@ -25,9 +25,8 @@ namespace ctrl {
 	class barriers {
 
 		private:
-			int counter;
-			int number_threads;
-			int reset;
+			volatile int counter;
+			volatile int number_threads;
 
 		public:
 			barriers(int number);
@@ -39,11 +38,11 @@ namespace ctrl {
 	class locks {
 
 		private:
-			int counter;
-			int locked;
-			int next;
-			int number_threads;
-			int *turn;
+			volatile int counter;
+			volatile int locked;
+			volatile int next;
+			volatile int number_threads;
+			volatile int *turn;
 
 		public:
 			locks(int number_threads);

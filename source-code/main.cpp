@@ -6,7 +6,7 @@
 #									      #
 #	+ Created Date: April 3th, 2016	      #
 #									      #
-#	+ Last Modified: April 12th, 2016	  #
+#	+ Last Modified: April 13th, 2016	  #
 #									  	  #
 #	+ Title: main.cpp					  #
 #									      #
@@ -30,7 +30,7 @@ unsigned long _number_bytes = 0;
 
 ctrl::locks _lock;
 
-ctrl::barriers _barrier;
+ctrl::barriers _barrier_answ, _barrier_req;
 
 
 /* function declaration */
@@ -77,7 +77,9 @@ int main (int argc, char **argv) {
 
 		_lock = ctrl::locks(length);
 		
-		_barrier = ctrl::barriers(length);
+		_barrier_answ = ctrl::barriers(length);
+
+		_barrier_req = ctrl::barriers(length);
 
 		for(int i = 0 ; i < length ; i++)
 			thread_activ.push_back(std::thread(activity, i, directory[i]));
@@ -108,8 +110,10 @@ int main (int argc, char **argv) {
 
 		_lock = ctrl::locks(length);
 
-		_barrier = ctrl::barriers(length);
+		_barrier_answ = ctrl::barriers(length);
 
+		_barrier_req = ctrl::barriers(length);
+		
  		for(int i = 0 ; i < length ; i++)
 			thread_activ.push_back(std::thread(activity, i, buffer_request[i]));
  	}
@@ -130,7 +134,7 @@ void activity(int index, std::string name_req) {
 
 	std::cout << "@ Wait: " << index + 1 << std::endl;
 
-	_barrier.stay();
+	_barrier_answ.stay();
 
 	_lock.enable(index);
 	
@@ -142,5 +146,5 @@ void activity(int index, std::string name_req) {
 
 	_lock.disable();
 
-	_barrier.stay();
+	_barrier_req.stay();
 }
